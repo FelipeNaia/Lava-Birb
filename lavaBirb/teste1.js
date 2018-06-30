@@ -85,7 +85,7 @@ function animate() {
 
    
     c.fillStyle = "green";
-    c.fillText("Frame: "+ framecount, 100, 100);
+    c.fillText("Score: "+ framecount, 100, 100);
 
 
     if(framecount % 60 == 0){
