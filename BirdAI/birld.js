@@ -11,10 +11,26 @@ class bird {
         this.energy = 100;
         this.orbs = [];
         this.lado = 1;
+        this.nn = new NeuralNetwork(21, 21, 21, 2)
 
         for (let i = 0; i < 0; i++) {
             this.orbs.push(new orb(this));
         }
+    }
+
+    think(input){
+        let result = this.nn.calculate(input);
+        if(result[0] > 2){
+            this.pular()
+        }
+
+        if(result[1] > 5){
+            this.direita()
+        }
+        else if(result[1] < -5){
+            this.esquerda()
+        }
+        return result;
     }
 
     bump(thatx) {

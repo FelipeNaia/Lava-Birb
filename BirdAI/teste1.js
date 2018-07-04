@@ -49,7 +49,7 @@ function check(e) {
 function setup() {
     canvas.id = "canv";
     canvas.width = 800;
-    canvas.height = 800;
+    canvas.height = 600;
     canvas.style.zIndex = 8;
     canvas.style.position = "absolute";
     canvas.style.border = "1px solid";
@@ -95,7 +95,7 @@ function animate() {
         inpVector.push(blast[i].dy/8);
     }
 
-    comando = nn.calculate(inpVector);
+    comando = passaro.think(inpVector);
 
 
     c.fillStyle = 'gray';
@@ -105,7 +105,6 @@ function animate() {
     c.fillText("Score: "+ framecount, 10, 40);
     c.fillText("Output[0]: "+ comando[0], 10, 80);
     c.fillText("Output[1]: "+ comando[1], 10, 120);
-    c.fillText("Output[2]: "+ comando[2], 10, 160);
 
 
     for (let i = 0; i < blast.length; i++) {

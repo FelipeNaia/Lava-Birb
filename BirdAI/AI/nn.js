@@ -64,4 +64,3 @@ class NeuralNetwork{
 
 }
 
-let nn = new NeuralNetwork(21, 21, 21, 3)
