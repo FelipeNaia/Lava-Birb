@@ -95,9 +95,7 @@ function animate() {
         inpVector.push(blast[i].dy/8);
     }
 
-    comando = nn.calculate(inpVector, 0);
-    comando1 = nn.calculate(inpVector, 1);
-    comando2 = nn.calculate(inpVector, 2);
+    comando = nn.calculate(inpVector);
 
 
     c.fillStyle = 'gray';
@@ -105,9 +103,10 @@ function animate() {
    
     c.fillStyle = "green";
     c.fillText("Score: "+ framecount, 10, 40);
-    c.fillText("Output[0]: "+ comando, 10, 80);
-    c.fillText("Output[1]: "+ comando1, 10, 120);
-    c.fillText("Output[2]: "+ comando2, 10, 160);
+    c.fillText("Output[0]: "+ comando[0], 10, 80);
+    c.fillText("Output[1]: "+ comando[1], 10, 120);
+    c.fillText("Output[2]: "+ comando[2], 10, 160);
+
 
     for (let i = 0; i < blast.length; i++) {
         blast[i].draw();

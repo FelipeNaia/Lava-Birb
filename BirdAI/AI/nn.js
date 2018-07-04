@@ -21,24 +21,47 @@ class NeuralNetwork{
         //criar hidden layer
         this.hiddenLayer = [];
         for(let i = 0; i < hidLayerSize; i++){
-            let newPer = new Perceptron(this.inputLayer);
+            let newPer = new Perceptron(this.inputLayer.length);
             this.hiddenLayer.push(newPer);
         }
 
         //criando outLayer
         this.outputLayer = [];
         for(let i = 0; i < outLayerSize; i++){
-            let newPer = new Perceptron(this.hiddenLayer);
+            let newPer = new Perceptron(this.hiddenLayer.length);
             this.outputLayer.push(newPer);
         }
     }
 
-    calculate(inp, saida){
+    /*calculate(inp, saida){
         for(let i = 0; i < this.inputLayer.length; i++){
             this.inputLayer[i].inputs = inp;
         }
         return this.outputLayer[saida].output()
+    }*/
+
+    calculate(input){
+        //calcula resultado da primeira layer
+        let firstLayerResult = [];
+        for(let i = 0; i < this.inputLayer.length; i++){
+            firstLayerResult.push(this.inputLayer[i].output(input));
+        }
+
+        let hiddenLayerResult = [];
+        for(let i = 0; i < this.hiddenLayer.length; i++){
+            hiddenLayerResult.push(this.hiddenLayer[i].output(firstLayerResult));
+        }
+
+        let outputLayerResult = [];
+        for(let i = 0; i < this.outputLayer.length; i++){
+            outputLayerResult.push(this.outputLayer[i].output(hiddenLayerResult));
+        }
+
+        return outputLayerResult;
+
     }
+
+
 }
 
 let nn = new NeuralNetwork(21, 21, 21, 3)
