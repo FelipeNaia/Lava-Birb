@@ -48,8 +48,8 @@ function check(e) {
 
 function setup() {
     canvas.id = "canv";
-    canvas.width = 1200;
-    canvas.height = 600;
+    canvas.width = 800;
+    canvas.height = 800;
     canvas.style.zIndex = 8;
     canvas.style.position = "absolute";
     canvas.style.border = "1px solid";
@@ -72,6 +72,7 @@ for (let i = 0; i < 4; i++) {
 }
 
 let inpVector = [];
+let comando;
 
 function animate() {
     framecount++;
@@ -81,26 +82,32 @@ function animate() {
 
     inpVector = [];
 
-    inpVector.push(passaro.xpos);
-    inpVector.push(passaro.ypos);
-    inpVector.push(passaro.dx);
-    inpVector.push(passaro.dy);
-    inpVector.push(passaro.energy);
+    inpVector.push(passaro.xpos/canvas.width);
+    inpVector.push(passaro.ypos/canvas.height);
+    inpVector.push(passaro.dx/10);
+    inpVector.push(passaro.dy/10);
+    inpVector.push(passaro.energy/100);
 
     for (let i = 0; i < blast.length; i++) {
-        inpVector.push(blast[i].xpos);
-        inpVector.push(blast[i].ypos);
-        inpVector.push(blast[i].dx);
-        inpVector.push(blast[i].dy);
+        inpVector.push(blast[i].xpos/canvas.width);
+        inpVector.push(blast[i].ypos/canvas.height);
+        inpVector.push(blast[i].dx/8);
+        inpVector.push(blast[i].dy/8);
     }
 
-    console.table(inpVector)
+    comando = nn.calculate(inpVector, 0);
+    comando1 = nn.calculate(inpVector, 1);
+    comando2 = nn.calculate(inpVector, 2);
+
 
     c.fillStyle = 'gray';
     c.fillRect(0, 0, canvas.width, canvas.height);
    
     c.fillStyle = "green";
-    c.fillText("Score: "+ framecount, 100, 100);
+    c.fillText("Score: "+ framecount, 10, 40);
+    c.fillText("Output[0]: "+ comando, 10, 80);
+    c.fillText("Output[1]: "+ comando1, 10, 120);
+    c.fillText("Output[2]: "+ comando2, 10, 160);
 
     for (let i = 0; i < blast.length; i++) {
         blast[i].draw();

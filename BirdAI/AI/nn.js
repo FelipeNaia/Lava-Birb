@@ -7,15 +7,14 @@ let d = new Perceptron(inplayer);
 let hilayer = [c, d];
 let o = new Perceptron(hilayer);
 */
-let testV = [2, 3, 4];
 
 
 class NeuralNetwork{
-    constructor(inArray, inLayerSize, hidLayerSize, outLayerSize){
+    constructor(inArraySize, inLayerSize, hidLayerSize, outLayerSize){
         //criar primeira layer
         this.inputLayer = []
         for(let i = 0; i < inLayerSize; i++){
-            let newPer = new Perceptron(inArray);
+            let newPer = new Perceptron(inArraySize);
             this.inputLayer.push(newPer);
         }
 
@@ -34,12 +33,12 @@ class NeuralNetwork{
         }
     }
 
-    calculate(inp){
+    calculate(inp, saida){
         for(let i = 0; i < this.inputLayer.length; i++){
             this.inputLayer[i].inputs = inp;
         }
-        return this.outputLayer[0].output()
+        return this.outputLayer[saida].output()
     }
 }
 
-let nn = new NeuralNetwork(testV, 9, 30, 1)
+let nn = new NeuralNetwork(21, 21, 21, 3)

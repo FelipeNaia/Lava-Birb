@@ -12,7 +12,7 @@ class bird {
         this.orbs = [];
         this.lado = 1;
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 0; i++) {
             this.orbs.push(new orb(this));
         }
     }
