@@ -32,7 +32,7 @@ function createCanvas() {
     slider = document.createElement('input');
     slider.setAttribute('type', 'range');
     slider.setAttribute('min', '1');
-    slider.setAttribute('max', '20');
+    slider.setAttribute('max', '100');
     slider.setAttribute('value', '1');
     slider.setAttribute('class', 'slider');
     let div = document.getElementById("aux");
@@ -65,4 +65,19 @@ function ordenaScore(array){
 function pickRandom(array){
     let i = Math.random() * array.length;
     return array[Math.floor(i)];
+}
+
+function comparaMaxScore(birdA, birdB) {
+    if (birdA.maxScore > birdB.maxScore) {
+        return 1;
+    }
+    if (birdA.maxScore < birdB.maxScore) {
+        return -1;
+    }
+
+    return 0;
+}
+
+function ordenaMaxScore(array){
+    array.sort(comparaMaxScore);
 }

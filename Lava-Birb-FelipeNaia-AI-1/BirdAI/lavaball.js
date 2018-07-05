@@ -64,8 +64,6 @@ class Lavaball{
     }
 
     draw(){
-        
-        this.update();
 
         c.beginPath();
         c.arc(this.xpos, this.ypos, this.size, 0, Math.PI * 2, false);

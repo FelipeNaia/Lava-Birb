@@ -1,19 +1,21 @@
 class bird {
     constructor() {
+        this.hp = 100;
+        this.newscore = 0;
         this.score = 0;
         this.maxScore = 0;
         this.xpos = 100;
         this.ypos = 200;
         this.size = 20;
-        this.dx = 1;
+        this.dx = 0;
         this.dy = 0;
-        this.hp = 100;
         this.decay = 0.97;
         this.grav = 0.14
         this.energy = 100;
         this.orbs = [];
         this.lado = 1;
         this.nn = new NeuralNetwork(21, 21, 21, 2)
+        this.color = 'rgb( '+ Math.random()*255 + ','+ Math.random()*255 + ','+ Math.random()*255 + ')'
         
 
         //for (let i = 0; i < 0; i++) {
@@ -24,11 +26,12 @@ class bird {
     reset(){
         this.xpos = 100;
         this.ypos = 200;
-        this.score = 0;
         this.dx = 1;
         this.dy = 0;
         this.energy = 100;
         this.hp = 100;
+        this.score = this.newscore;
+        this.newscore = 0;
     }
 
     think(inputx) {
@@ -107,7 +110,7 @@ class bird {
         }
 
         if (this.energy < 100) {
-            this.energy += 0.5;
+            this.energy++;
         }
 
         this.dx = this.dx * this.decay;
@@ -117,8 +120,12 @@ class bird {
         this.xpos += this.dx;
 
         if (this.hp > 0) {
-            this.score++;
+            this.newscore++;
             this.think(inpVector)
+        }
+        else{
+            this.reset();
+            population.next();
         }
 
         if (this.score > this.maxScore) {
@@ -127,8 +134,6 @@ class bird {
     }
 
     draw() {
-
-        this.update();
 
         for (let i = 0; i < this.orbs.length; i++) {
             this.orbs[i].draw();
@@ -139,9 +144,9 @@ class bird {
 
         c.beginPath();
         c.arc(this.xpos, this.ypos, this.size, 0, Math.PI * 2, false);
-        c.strokeStyle = 'yellow';
+        c.strokeStyle = this.color;
         c.stroke();
-        c.fillStyle = 'yellow';
+        c.fillStyle = this.color;
         c.fill();
 
         //hp bar
@@ -163,9 +168,9 @@ class bird {
 
             c.beginPath();
             c.arc(this.xpos + 17, this.ypos - 17, this.size / 2, 0, Math.PI * 2, false);
-            c.strokeStyle = 'yellow';
+            c.strokeStyle = this.color;
             c.stroke();
-            c.fillStyle = 'yellow';
+            c.fillStyle = this.color;
             c.fill();
 
             c.beginPath();
@@ -180,9 +185,9 @@ class bird {
         if (this.lado == -1) {
             c.beginPath();
             c.arc(this.xpos - 17, this.ypos - 17, this.size / 2, 0, Math.PI * 2, false);
-            c.strokeStyle = 'yellow';
+            c.strokeStyle = this.color;
             c.stroke();
-            c.fillStyle = 'yellow';
+            c.fillStyle = this.color;
             c.fill();
 
             c.beginPath();
@@ -197,7 +202,7 @@ class bird {
         c.textAlign="center";
         c.font = "15px Sans seriff MS";
         c.fillStyle = "green";
-        c.fillText(this.score, this.xpos, this.ypos);
+        c.fillText(this.newscore, this.xpos, this.ypos);
 
     }
 

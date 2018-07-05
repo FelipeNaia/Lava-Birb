@@ -13,7 +13,7 @@ let lavaAmount = 4;
 newLava(lavaAmount);
 
 let actualBird;
-let popSize = 10;
+let popSize = 20;
 let population = new Population(popSize);
 
 
@@ -31,33 +31,37 @@ function animate() {
     }
 
     for (let i = 0; i < slider.value; i++) {//time acceleration
-        c.textAlign = "left"
-        c.font = "30px Sans seriff MS";
 
         framecount++;
 
-        c.fillStyle = 'gray';
+        inpVector = [];
+        for (let i = 0; i < blast.length; i++) {
+            blast[i].update();
+
+            inpVector.push(blast[i].xpos / canvas.width);
+            inpVector.push(blast[i].ypos / canvas.height);
+            inpVector.push(blast[i].dx / 8);
+            inpVector.push(blast[i].dy / 8);
+        }
+
+        population.update();
+
+    }
+    c.textAlign = "left"
+        c.font = "30px Sans seriff MS";
+
+    c.fillStyle = 'gray';
         c.fillRect(0, 0, canvas.width, canvas.height);
 
         c.fillStyle = "green";
         c.fillText("Score: " + framecount, 10, 40);
+        c.fillText("Gen: " + population.generation, 10, 80);
+        c.fillText("Gen[i]: " + population.actualBird, 10, 120);
 
-        for (let i = 0; i < blast.length; i++) {
-            blast[i].draw();
-        }
-
-        inpVector = [];
-        inpVector.push(blast[i].xpos / canvas.width);
-        inpVector.push(blast[i].ypos / canvas.height);
-        inpVector.push(blast[i].dx / 8);
-        inpVector.push(blast[i].dy / 8);
-
-        population.draw();
-
-
-
-
+    for (let i = 0; i < blast.length; i++) {
+        blast[i].draw();
     }
+    population.draw();
 }
 
 
