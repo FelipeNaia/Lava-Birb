@@ -1,5 +1,7 @@
 class bird {
     constructor() {
+        this.score = 0;
+        this.maxScore = 0;
         this.xpos = 100;
         this.ypos = 200;
         this.size = 20;
@@ -12,12 +14,21 @@ class bird {
         this.orbs = [];
         this.lado = 1;
         this.nn = new NeuralNetwork(21, 21, 21, 2)
-        this.score = 0;
-        this.maxScore = 0;
+        
 
         //for (let i = 0; i < 0; i++) {
         //    this.orbs.push(new orb(this));
         //}
+    }
+
+    reset(){
+        this.xpos = 100;
+        this.ypos = 200;
+        this.score = 0;
+        this.dx = 1;
+        this.dy = 0;
+        this.energy = 100;
+        this.hp = 100;
     }
 
     think(inputx) {
@@ -99,11 +110,6 @@ class bird {
             this.energy += 0.5;
         }
 
-        this.score++
-        if (this.score > this.maxScore) {
-            this.maxScore = this.score;
-        }
-
         this.dx = this.dx * this.decay;
         this.dy = this.dy * this.decay;
 
@@ -111,7 +117,12 @@ class bird {
         this.xpos += this.dx;
 
         if (this.hp > 0) {
+            this.score++;
             this.think(inpVector)
+        }
+
+        if (this.score > this.maxScore) {
+            this.maxScore = this.score;
         }
     }
 
@@ -182,6 +193,11 @@ class bird {
             c.fillStyle = 'blue';
             c.fill();
         }
+
+        c.textAlign="center";
+        c.font = "15px Sans seriff MS";
+        c.fillStyle = "green";
+        c.fillText(this.score, this.xpos, this.ypos);
 
     }
 

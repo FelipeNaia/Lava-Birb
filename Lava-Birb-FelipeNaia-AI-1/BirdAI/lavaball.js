@@ -24,19 +24,15 @@ class Lavaball{
     hit(thatx, thaty){
             if(thatx > this.xpos && this.dx > 0){
                 this.dx = -this.dx;
-                console.log('da esquerda');
             }
             else if(thatx < this.xpos && this.dx < 0){
                 this.dx = -this.dx;
-                console.log('da direita');
             }
             if(thaty > this.ypos && this.dy > 0){
                 this.dy = -this.dy;
-                console.log('de cima');
             }
             else if(thaty < this.ypos && this.dy < 0){
                 this.dy = -this.dy;
-                console.log('de baixo');
             }
         this.boom(this.xpos, this.ypos);
         
@@ -63,12 +59,6 @@ class Lavaball{
             }
         }
 
-        //for(let i = 0; i < passaro.orbs.length; i ++){
-        //    if(distance(this, passaro.orbs[i]) < this.size/2 + passaro.orbs[i].radius){
-        //        console.log('finish me!')
-        //    }
-        //}
-
         this.ypos += this.dy;
         this.xpos += this.dx;
     }
@@ -84,13 +74,13 @@ class Lavaball{
         c.fillStyle = 'orange';
         c.fill();
 
-        this.color1 = Math.random()*100 + 155;
+        this.color1 = Math.random()*255;
         this.color2 = Math.random()*this.color1/2;
         let particleColor = 'rgba(' + this.color1 + ', ' + this.color2 + ', 0, 1)';
 
         for(let i = 0; i < 3; i++){
             c.beginPath();
-            c.arc(this.xpos + ( (Math.random()- 0.5 ) * this.size * 2), this.ypos + ( (Math.random()- 0.5 ) * this.size * 2), 2, 0, Math.PI * 2, false);
+            c.arc(this.xpos + ( (Math.random()- 0.5 ) * this.size * 2), this.ypos + ( (Math.random()- 0.5 ) * this.size * 2), Math.random()*3 + 1, 0, Math.PI * 2, false);
             c.strokeStyle = particleColor;
             c.stroke();
             c.fillStyle = particleColor;

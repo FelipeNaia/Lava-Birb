@@ -31,7 +31,7 @@ class particle{
         }
 
         if(this.size > 0){
-            this.size = this.size * 0.9;
+            this.size = this.size * 0.99;
         }
 
         this.dx = this.dx * this.decay;
