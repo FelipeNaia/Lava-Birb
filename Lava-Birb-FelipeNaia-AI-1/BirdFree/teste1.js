@@ -23,7 +23,7 @@ function check(e) {
         pause();
     }
 }
-
+let sec = 0;
 function animate() {
 
     if (rodando) {
@@ -33,6 +33,9 @@ function animate() {
     for (let i = 0; i < slider.value; i++) {//time acceleration
 
         framecount++;
+        if(framecount % 59 == 0){
+            sec++;
+        }
 
         inpVector = [];
         
@@ -49,7 +52,7 @@ function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height);
 
         c.fillStyle = "green";
-        c.fillText("Score: " + framecount, 10, 40);
+        c.fillText("Score: " + sec , 10, 40);
         c.fillText("Gen: " + population.generation, 10, 80);
         c.fillText("Gen[i]: " + population.actualBird, 10, 120);
         c.fillText("Melhor: " + population.melhor.maxScore, 10, 160);
