@@ -7,6 +7,8 @@ class Population {   //class that controls the population of birds, and evolves 
             this.birds.push(new bird());
         }
         this.generation = 0;
+        this.melhor = this.birds[0];
+        this.lastmelhor = 0;
     }
 
     restart(){
@@ -21,7 +23,7 @@ class Population {   //class that controls the population of birds, and evolves 
         return healed;
     }
 
-    nextGen(){
+    /*nextGen(){
         this.generation++;
         this.actualBird = 0;
         ordenaScore(this.birds);
@@ -52,6 +54,39 @@ class Population {   //class that controls the population of birds, and evolves 
 
         this.birds = newGen;
 
+    }*/
+
+    nextGen(){
+
+        if(this.melhor.maxScore > this.lastmelhor){
+            mutationRate -= mutationRate * 0.05;
+        }
+        else if(mutationRate < 1){
+            mutationRate +=  0.1;
+        }
+
+        this.lastmelhor = this.melhor.maxScore;
+
+        this.generation++;
+        this.actualBird = 0;
+        let newGen = [];
+
+        ordenaScore(this.birds);
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.75; i--){
+            newGen.push(this.birds[i].himself())
+        }
+
+        ordenaMaxScore(this.birds);
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.85; i--){
+            newGen.push(this.birds[i].himself())
+        }
+
+        let index =  this.birds.length - 1;
+        while(index >= 0 && this.birds.length != newGen.length){
+            newGen.push(this.birds[index].cross(pickRandom(newGen)))
+        }
+
+        this.birds = newGen
     }
 
     next(){
@@ -62,13 +97,17 @@ class Population {   //class that controls the population of birds, and evolves 
         else{
             this.nextGen();
             //this.birds = this.restart();
-            console.log(this.birds);
-            
         }
+
+
     }
 
     update() {
         this.birds[this.actualBird].update();
+
+        if(this.birds[this.actualBird].maxScore > this.melhor.maxScore){
+            this.melhor = this.birds[this.actualBird];
+        }
         /*
         if (this.birds[this.actualBird].hp <= 0) {
             
@@ -89,6 +128,7 @@ class Population {   //class that controls the population of birds, and evolves 
 
     draw() {
         this.birds[this.actualBird].draw();
+
         
     }
 }

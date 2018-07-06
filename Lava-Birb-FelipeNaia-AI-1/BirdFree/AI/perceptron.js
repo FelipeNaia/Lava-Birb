@@ -22,15 +22,15 @@ class Perceptron {
 
     change(){
         //console.log('eficiencia');
-            if(Math.random() > 0.5){
-                this.bias += (Math.random() - 0.5) * Math.random() * 2;
-            }
+            
+                this.bias += (Math.random() - 0.5) * Math.random() * mutationRate * 10;
+            
 
         for(let i = 0; i < this.weights.length; i++){
-            if(Math.random() > 0.5){
+            
                 //console.log('eficiencia');
-                this.weights[i] += (Math.random() - 0.5) * Math.random() * 2;
-            }
+                this.weights[i] += (Math.random() - 0.5) * Math.random() * mutationRate * 10;
+            
         }
     }
 

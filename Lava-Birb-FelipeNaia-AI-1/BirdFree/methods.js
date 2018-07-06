@@ -32,7 +32,7 @@ function createCanvas() {
     slider = document.createElement('input');
     slider.setAttribute('type', 'range');
     slider.setAttribute('min', '1');
-    slider.setAttribute('max', '1000');
+    slider.setAttribute('max', '5000');
     slider.setAttribute('value', '1');
     slider.setAttribute('class', 'slider');
     let div = document.getElementById("aux");
