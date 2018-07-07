@@ -3,8 +3,8 @@ class Lavaball{
         this.xpos = canvas.width - 100;
         this.ypos = canvas.height / 2;
         this.size = 10;
-        this.dx = 0;//(Math.random()-0.5) * 8 + 8;
-        this.dy = 0;//(Math.random()-0.5) * 8 + 8;
+        this.dx = (Math.random()-0.5) * 16;
+        this.dy = (Math.random()-0.5) * 16;
         this.numberParticles = 30;
         this.particles = [];
         this.clockP = [];
@@ -56,27 +56,6 @@ class Lavaball{
             if(this.clockP[i] <=1){
                 this.clockP.splice(0, 1);
                 this.particles.splice(0, this.numberParticles);
-            }
-        }
-
-        if(population.birds[population.actualBird].xpos > this.xpos){
-            if(this.dx < 16){
-                this.dx += 0.2;
-            }
-        }
-        if(population.birds[population.actualBird].xpos < this.xpos){
-            if(this.dx > -16){
-                this.dx -= 0.2;
-            }
-        }
-        if(population.birds[population.actualBird].ypos > this.ypos){
-            if(this.dy < 16){
-                this.dy += 0.2;
-            }
-        }
-        if(population.birds[population.actualBird].ypos < this.ypos){
-            if(this.dy > -16){
-                this.dy -= 0.2;
             }
         }
 

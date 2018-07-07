@@ -14,7 +14,7 @@ class bird {
         this.energy = 100;
         this.orbs = [];
         this.lado = 1;
-        this.nn = new NeuralNetwork( 4 * blast.length + 7,  8 * blast.length + 7,  4 * blast.length + 7, 4)
+        this.nn = new NeuralNetwork( 3 * blast.length + 6, 3 * blast.length +6,  (3 * blast.length + 6), 4)
         this.color = 'rgb( ' + Math.random() * 255 + ',' + Math.random() * 255 + ',' + Math.random() * 255 + ')';
         this.output;
 
@@ -47,33 +47,31 @@ class bird {
         input.push((canvas.height - this.ypos) / canvas.height);
         input.push(this.dx / 10);
         input.push(this.dy / 10);
-        input.push(this.energy / 100);
 
         for (let i = 0; i < blast.length; i++) {
             blast[i].update();
 
             input.push(blast[i].xpos / canvas.width - this.xpos / canvas.width);
             input.push(blast[i].ypos / canvas.height - this.ypos / canvas.height);
-            input.push(blast[i].dx - this.dx);
-            input.push(blast[i].dy - this.dy);
+            input.push(distance(this,blast[i]) / 100);
         }
 
         
 
         let result = this.nn.calculate(input);
-        if (result[0] > 2) {
+        if (result[0] > 0) {
             this.pular();
         }
         
-        if (result[1] > 2) {
+        if (result[1] > 0) {
             this.down();
         }
 
-        if (result[2] > 2) {
+        if (result[2] > 0) {
             this.direita();
         }
-        
-        if (result[3] > 2) {
+         
+        if (result[3] > 0) {
             this.esquerda();
         }
 
@@ -188,7 +186,7 @@ class bird {
             this.energy++;
         }
 
-        if(this.newscore % 1000000 == 0){
+        if(this.newscore % 50000 == 0){
             newLava(blast.length)
         }
 

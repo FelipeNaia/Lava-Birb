@@ -1,6 +1,6 @@
 class bird {
     constructor() {
-        this.hp = 1;
+        this.hp = 100;
         this.newscore = 0;
         this.score = 0;
         this.maxScore = 0;
@@ -10,11 +10,11 @@ class bird {
         this.dx = 0;
         this.dy = 0;
         this.decay = 0.97;
-        this.grav = 0;
+        this.grav = 0.14
         this.energy = 100;
         this.orbs = [];
         this.lado = 1;
-        this.nn = new NeuralNetwork( 4 * blast.length + 7,  8 * blast.length + 7,  4 * blast.length + 7, 4)
+        this.nn = new NeuralNetwork(21, 21, 21, 2)
         this.color = 'rgb( ' + Math.random() * 255 + ',' + Math.random() * 255 + ',' + Math.random() * 255 + ')';
         this.output;
 
@@ -30,7 +30,7 @@ class bird {
         this.dx = 1;
         this.dy = 0;
         this.energy = 100;
-        this.hp = 1;
+        this.hp = 100;
         this.score = this.newscore;
         this.newscore = 0;
     }
@@ -40,40 +40,21 @@ class bird {
         let input = inputx;//copies the input array
 
         //fill input array with its own info
-
         input.push(this.xpos / canvas.width);
         input.push(this.ypos / canvas.height);
-        input.push((canvas.width - this.xpos) / canvas.width);
-        input.push((canvas.height - this.ypos) / canvas.height);
         input.push(this.dx / 10);
         input.push(this.dy / 10);
         input.push(this.energy / 100);
 
-        for (let i = 0; i < blast.length; i++) {
-            blast[i].update();
-
-            input.push(blast[i].xpos / canvas.width - this.xpos / canvas.width);
-            input.push(blast[i].ypos / canvas.height - this.ypos / canvas.height);
-            input.push(blast[i].dx - this.dx);
-            input.push(blast[i].dy - this.dy);
-        }
-
-        
-
         let result = this.nn.calculate(input);
-        if (result[0] > 2) {
+        if (result[0] > 1) {
             this.pular();
         }
-        
-        if (result[1] > 2) {
-            this.down();
-        }
 
-        if (result[2] > 2) {
+        if (result[1] > 1) {
             this.direita();
         }
-        
-        if (result[3] > 2) {
+        else if (result[1] < -1) {
             this.esquerda();
         }
 
@@ -188,10 +169,6 @@ class bird {
             this.energy++;
         }
 
-        if(this.newscore % 1000000 == 0){
-            newLava(blast.length)
-        }
-
         this.dx = this.dx * this.decay;
         this.dy = this.dy * this.decay;
 
@@ -287,9 +264,9 @@ class bird {
     }
 
     direita() {
-        if (this.energy > 5) {
-            this.dx += 5;
-            this.energy -= 5;
+        if (this.energy > 20) {
+            this.dx += 3;
+            this.energy -= 20;
             this.lado = 1;
         }
 
@@ -297,24 +274,17 @@ class bird {
     }
 
     esquerda() {
-        if (this.energy > 5) {
-            this.dx -= 5;
-            this.energy -= 5;
+        if (this.energy > 20) {
+            this.dx -= 3;
+            this.energy -= 20;
             this.lado = -1;
         }
     }
 
     pular() {
-        if (this.energy > 5) {
-            this.dy -= 5;
-            this.energy -= 5;
-        }
-    }
-
-    down() {
-        if (this.energy > 5) {
-            this.dy += 5;
-            this.energy -= 5;
+        if (this.energy > 20) {
+            this.dy = -10;
+            this.energy -= 20;
         }
     }
 }

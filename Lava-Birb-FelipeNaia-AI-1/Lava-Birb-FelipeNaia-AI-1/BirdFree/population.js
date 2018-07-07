@@ -61,7 +61,7 @@ class Population {   //class that controls the population of birds, and evolves 
         /*if(this.melhor.maxScore > this.lastmelhor){
             mutationRate -= mutationRate * 0.05;
         }
-        else if(mutationRate < 1){
+        else if(mutationRate < 0.15){
             mutationRate +=  0.1;
         }*/
 
@@ -72,18 +72,34 @@ class Population {   //class that controls the population of birds, and evolves 
         let newGen = [];
 
         ordenaScore(this.birds);
-        for(let i = this.birds.length - 1; i >= this.birds.length * 0.75; i--){
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.9; i--){
             newGen.push(this.birds[i].himself())
+        }
+
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.75; i--){
+            newGen.push(this.birds[i].child())
+        }
+
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.75 ; i--){
+            let a = this.birds[i].himself();
+            let b = new bird();
+            newGen.push(a.cross(b));
         }
 
         ordenaMaxScore(this.birds);
-        for(let i = this.birds.length - 1; i >= this.birds.length * 0.85; i--){
-            newGen.push(this.birds[i].himself())
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.95; i--){
+            newGen.push(this.birds[i].child())
         }
 
-        let index =  this.birds.length - 1;
-        while(index >= 0 && this.birds.length != newGen.length){
-            newGen.push(this.birds[index].cross(pickRandom(newGen)))
+        for(let i = this.birds.length - 1; i >= this.birds.length * 0.9 ; i--){
+            let a = this.birds[i].himself();
+            let b = new bird();
+            newGen.push(a.cross(b));
+        }
+
+        let index =  0;
+        while(index < this.birds.length && this.birds.length != newGen.length){
+            newGen.push(newGen[index].cross(pickRandom(newGen)))
         }
 
         this.birds = newGen

@@ -11,6 +11,7 @@ class Lavaball{
         this.color1 = 0;
         this.color2 = 0;
         this.ptimer = 6;
+        this.decay = 0.97;
     }
 
     boom(spawnx, spawny){
@@ -79,6 +80,8 @@ class Lavaball{
                 this.dy -= 0.2;
             }
         }
+        this.dx = this.dx * this.decay;
+        this.dy = this.dy * this.decay;
 
         this.ypos += this.dy;
         this.xpos += this.dx;

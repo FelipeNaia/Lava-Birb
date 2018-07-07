@@ -9,11 +9,11 @@ let comando;
 let mutationRate = 0.1;
 
 let blast = [];
-let lavaAmount = 1;
+let lavaAmount = 4;
 newLava(lavaAmount);
 
 let actualBird;
-let popSize = 100;
+let popSize = 20;
 let population = new Population(popSize);
 
 
@@ -35,7 +35,14 @@ function animate() {
         framecount++;
 
         inpVector = [];
-        
+        for (let i = 0; i < blast.length; i++) {
+            blast[i].update();
+
+            inpVector.push(blast[i].xpos / canvas.width);
+            inpVector.push(blast[i].ypos / canvas.height);
+            inpVector.push(blast[i].dx / 8);
+            inpVector.push(blast[i].dy / 8);
+        }
 
         population.update();
 
@@ -52,7 +59,6 @@ function animate() {
         c.fillText("Score: " + framecount, 10, 40);
         c.fillText("Gen: " + population.generation, 10, 80);
         c.fillText("Gen[i]: " + population.actualBird, 10, 120);
-        c.fillText("Melhor: " + population.melhor.maxScore, 10, 160);
 
     for (let i = 0; i < blast.length; i++) {
         blast[i].draw();
