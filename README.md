@@ -1,2 +1,2 @@
 # Lava-Birb
-Experimentation and discovery with JavaScript, and this will soon feature neural networks for AI
+Experimentation and discovery with JavaScript, and this now features neural networks for AI

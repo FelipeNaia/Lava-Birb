@@ -2,15 +2,16 @@ class Lavaball{
     constructor(){
         this.xpos = canvas.width - 100;
         this.ypos = canvas.height / 2;
-        this.size = 20;
-        this.dx = (Math.random()-0.5) * 16;
-        this.dy = (Math.random()-0.5) * 16;
+        this.size = 10;
+        this.dx = 0;//(Math.random()-0.5) * 8 + 8;
+        this.dy = 0;//(Math.random()-0.5) * 8 + 8;
         this.numberParticles = 30;
         this.particles = [];
         this.clockP = [];
         this.color1 = 0;
         this.color2 = 0;
         this.ptimer = 6;
+        this.decay = 0.97;
     }
 
     boom(spawnx, spawny){
@@ -18,25 +19,21 @@ class Lavaball{
             let p = new particle(spawnx, spawny)
             this.particles.push(p);
         }
-        this.clockP.push(6);
+        this.clockP.push(60);
     }
 
     hit(thatx, thaty){
             if(thatx > this.xpos && this.dx > 0){
                 this.dx = -this.dx;
-                console.log('da esquerda');
             }
             else if(thatx < this.xpos && this.dx < 0){
                 this.dx = -this.dx;
-                console.log('da direita');
             }
             if(thaty > this.ypos && this.dy > 0){
                 this.dy = -this.dy;
-                console.log('de cima');
             }
             else if(thaty < this.ypos && this.dy < 0){
                 this.dy = -this.dy;
-                console.log('de baixo');
             }
         this.boom(this.xpos, this.ypos);
         
@@ -63,32 +60,54 @@ class Lavaball{
             }
         }
 
-        for(let i = 0; i < passaro.orbs.length; i ++){
-            if(distance(this, passaro.orbs[i]) < this.size/2 + passaro.orbs[i].radius){
-                console.log('finish me!')
+        if(population.birds[population.actualBird].xpos > this.xpos){
+            if(this.dx < 16){
+                this.dx += 0.2;
             }
         }
+        if(population.birds[population.actualBird].xpos < this.xpos){
+            if(this.dx > -16){
+                this.dx -= 0.2;
+            }
+        }
+        if(population.birds[population.actualBird].ypos > this.ypos){
+            if(this.dy < 16){
+                this.dy += 0.2;
+            }
+        }
+        if(population.birds[population.actualBird].ypos < this.ypos){
+            if(this.dy > -16){
+                this.dy -= 0.2;
+            }
+        }
+        this.dx = this.dx * this.decay;
+        this.dy = this.dy * this.decay;
 
         this.ypos += this.dy;
         this.xpos += this.dx;
     }
 
     draw(){
-        
-        this.update();
 
+        c.beginPath();
+        c.arc(this.xpos, this.ypos, this.size, 0, Math.PI * 2, false);
+        c.strokeStyle = 'orange';
+        c.stroke();
         c.fillStyle = 'orange';
-        c.fillRect(this.xpos- this.size / 2, this.ypos- this.size / 2, this.size, this.size);
+        c.fill();
 
-        this.color1 = Math.random()*100 + 155;
+        this.color1 = Math.random()*255;
         this.color2 = Math.random()*this.color1/2;
+        let particleColor = 'rgba(' + this.color1 + ', ' + this.color2 + ', 0, 1)';
 
-        c.fillStyle = 'rgba(' + this.color1 + ', ' + this.color2 + ', 0, 1)';
-        c.fillRect(this.xpos - 2 + ( (Math.random()- 0.5 ) * this.size ), this.ypos - 2 + ( (Math.random()- 0.5 ) * this.size ), 4, 4);
-        c.fillRect(this.xpos - 2 + ( (Math.random()- 0.5 ) * this.size ), this.ypos - 2 + ( (Math.random()- 0.5 ) * this.size ), 4, 4);
-        c.fillRect(this.xpos - 2 + ( (Math.random()- 0.5 ) * this.size ), this.ypos - 2 + ( (Math.random()- 0.5 ) * this.size ), 4, 4);
-        //c.fillRect(this.xpos + (Math.random()+1) * 6 - this.size, this.ypos + (Math.random()+1) * 6- this.size/2, 4, 4);
-        //c.fillRect(this.xpos - 30, this.ypos - 15, 4, 4);
+        for(let i = 0; i < 3; i++){
+            c.beginPath();
+            c.arc(this.xpos + ( (Math.random()- 0.5 ) * this.size * 2), this.ypos + ( (Math.random()- 0.5 ) * this.size * 2), Math.random()*3 + 1, 0, Math.PI * 2, false);
+            c.strokeStyle = particleColor;
+            c.stroke();
+            c.fillStyle = particleColor;
+            c.fill();
+        }
 
         for(let i = 0; i < this.particles.length; i++){
             this.particles[i].draw();

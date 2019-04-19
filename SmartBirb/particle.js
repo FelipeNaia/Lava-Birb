@@ -23,15 +23,15 @@ class particle{
             this.dx = - this.dx;
         }
 
-        if(this.red>0){
+        if(this.red > 6){
             this.red-= 5;
         }
-        if(this.green>2){
+        if(this.green > 12){
             this.green-= 10
         }
 
-        if(this.size>0){
-            this.size = this.size * 0.9;
+        if(this.size > 0){
+            this.size = this.size * 0.99;
         }
 
         this.dx = this.dx * this.decay;
