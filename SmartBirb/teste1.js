@@ -52,8 +52,8 @@ function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height);
 
         c.fillStyle = "green";
-        c.fillText("Score: " + sec , 10, 40);
-        c.fillText("Gen: " + population.generation, 10, 80);
+        c.fillText("Tempo(s): " + sec , 10, 40);
+        c.fillText("Geração: " + population.generation, 10, 80);
         c.fillText("Gen[i]: " + population.actualBird, 10, 120);
         c.fillText("Melhor: " + population.melhor.maxScore, 10, 160);
 
